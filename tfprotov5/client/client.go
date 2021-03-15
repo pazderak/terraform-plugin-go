@@ -22,13 +22,25 @@ type ProviderClient struct {
 }
 
 func (c *ProviderClient) GetProviderSchema(ctx context.Context, req *tfprotov5.GetProviderSchemaRequest) (*tfprotov5.GetProviderSchemaResponse, error) {
-	greq, err := toproto.GetProviderSchema_Request(req)
+	r, err := toproto.GetProviderSchema_Request(req)
 	if err != nil {
 		return nil, err
 	}
-	gresp, err := c.client.GetSchema(ctx, greq)
+	rr, err := c.client.GetSchema(ctx, r)
 	if err != nil {
 		return nil, err
 	}
-	return fromproto.GetProviderSchemaResponse(gresp)
+	return fromproto.GetProviderSchemaResponse(rr)
+}
+
+func (c *ProviderClient) PrepareProviderConfig(ctx context.Context, req *tfprotov5.PrepareProviderConfigRequest) (*tfprotov5.PrepareProviderConfigResponse, error) {
+	r, err := toproto.PrepareProviderConfig_Request(req)
+	if err != nil {
+		return nil, err
+	}
+	rr, err := c.client.PrepareProviderConfig(ctx, r)
+	if err != nil {
+		return nil, err
+	}
+	return fromproto.PrepareProviderConfigResponse(rr)
 }
