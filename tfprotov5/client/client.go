@@ -56,3 +56,15 @@ func (c *ProviderClient) Configure(ctx context.Context, req *tfprotov5.Configure
 	}
 	return fromproto.ConfigureProviderResponse(rr)
 }
+
+func (c *ProviderClient) ReadResource(ctx context.Context, req *tfprotov5.ReadResourceRequest) (*tfprotov5.ReadResourceResponse, error) {
+	r, err := toproto.ReadResource_Request(req)
+	if err != nil {
+		return nil, err
+	}
+	rr, err := c.client.ReadResource(ctx, r)
+	if err != nil {
+		return nil, err
+	}
+	return fromproto.ReadResourceResponse(rr)
+}
