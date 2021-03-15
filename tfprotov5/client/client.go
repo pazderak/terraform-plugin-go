@@ -44,3 +44,15 @@ func (c *ProviderClient) PrepareProviderConfig(ctx context.Context, req *tfproto
 	}
 	return fromproto.PrepareProviderConfigResponse(rr)
 }
+
+func (c *ProviderClient) Configure(ctx context.Context, req *tfprotov5.ConfigureProviderRequest) (*tfprotov5.ConfigureProviderResponse, error) {
+	r, err := toproto.Configure_Request(req)
+	if err != nil {
+		return nil, err
+	}
+	rr, err := c.client.Configure(ctx, r)
+	if err != nil {
+		return nil, err
+	}
+	return fromproto.ConfigureProviderResponse(rr)
+}
